@@ -11,18 +11,18 @@ require([
     "esri/dijit/Legend",
     "dojo/domReady!"
     ], function(Map, arcgisUtils, Legend) {
-        /*map = new Map("mapDiv", {
-            center: [-56.049, 38.485],
-            zoom: 3,
-            basemap: "streets"
-        });*/
-        arcgisUtils.createMap("a71ceaa208ff4fb39b8f9abc5b717dc0", "mapDiv").then(function (response) {
-            map = response.map;
+    /*map = new Map("mapDiv", {
+        center: [-56.049, 38.485],
+        zoom: 3,
+        basemap: "streets"
+    });*/
+    arcgisUtils.createMap("1a40fa5cc1ab4569b79f45444d728067", "mapDiv").then(function (response) {
+        map = response.map;
 
-            var legend = new Legend({
-                map: map,
-                layerInfos:(arcgisUtils.getLegendLayers(response))
-            }, "legendDiv");
-            legend.startup();
-        });
+        var legend = new Legend({
+            map: map,
+            layerInfos:(arcgisUtils.getLegendLayers(response))
+        }, "legendDiv");
+        legend.startup();
+    });
 });
