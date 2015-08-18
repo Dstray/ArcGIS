@@ -8,9 +8,10 @@ var map;
 require([
     "esri/map",
     "esri/dijit/Directions",
-    //API  for layout
-    "dojo/parser", 
+    /*API for layout*/
+    "dojo/parser",
     "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+    /*API for remote map*/
     //"esri/arcgis/utils",
     //"esri/dijit/Legend",
     "dojo/domReady!"
