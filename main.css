@@ -10,6 +10,7 @@ html, body, #map, .map.container {
   height: 100%;
 }
 #map, .map.container {
+  position: fixed;
   float: left;
   width: 80%;
 }
