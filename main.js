@@ -8,13 +8,14 @@ var map;
 require([
     "esri/map",
     "esri/dijit/Directions",
+    //API  for layout
     "dojo/parser", 
     "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
     //"esri/arcgis/utils",
     //"esri/dijit/Legend",
     "dojo/domReady!"
     ], function(Map, Directions, parser) {
-    //parser.parse();
+    parser.parse();
     map = new Map("map", {
         center: [-56.049, 38.485],
         zoom: 3,
