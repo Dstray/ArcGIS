@@ -11,11 +11,10 @@ html, body, #map, .map.container {
 }
 #map, .map.container {
   position: fixed;
-  float: left;
   width: 80%;
 }
 #dir {
-  float: left;
+  float: right;
   width: 20%;
 }
 #legendDiv {
