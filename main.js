@@ -9,14 +9,14 @@ require([
     "esri/map",
     "esri/dijit/Directions",
     /*API for layout*/
-    "dojo/parser",
-    "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+    //"dojo/parser",
+    //"dijit/layout/BorderContainer", "dijit/layout/ContentPane",
     /*API for remote map*/
     //"esri/arcgis/utils",
     //"esri/dijit/Legend",
     "dojo/domReady!"
     ], function(Map, Directions, parser) {
-    parser.parse();
+    //parser.parse();
     map = new Map("map", {
         center: [-56.049, 38.485],
         zoom: 3,
@@ -32,7 +32,8 @@ require([
         legend.startup();
     });*/
     var directions = new Directions({
-        map: map
+        map: map,
+        routeTaskUrl: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Route"
     }, "dir");
     directions.startup();
 });

@@ -4,10 +4,18 @@
  * Licensed under the MIT license
  */
 
-html, body {
+html, body, #map, .map.container {
   padding: 0;
   margin: 0;
   height: 100%;
+}
+#map, .map.container {
+  float: left;
+  width: 80%;
+}
+#dir {
+  float: left;
+  width: 20%;
 }
 #legendDiv {
   background-color: #fff;
