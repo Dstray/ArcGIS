@@ -14,7 +14,7 @@ require([
     //"esri/dijit/Legend",
     "dojo/domReady!"
     ], function(Map, Directions, parser) {
-    parser.parse();
+    //parser.parse();
     map = new Map("map", {
         center: [-56.049, 38.485],
         zoom: 3,
