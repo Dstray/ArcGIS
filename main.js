@@ -6,12 +6,13 @@
 
 require([
         "esri/Map",
+        "esri/tasks/Locator",
         "esri/views/MapView",
         "esri/widgets/BasemapToggle",
         "esri/widgets/Locate",
         "esri/widgets/Search",
         "dojo/domReady!"
-    ], function(Map, MapView, BasemapToggle, Locate, Search) {
+    ], function(Map, Locator, MapView, BasemapToggle, Locate, Search) {
 
     var map = new Map({
         basemap: "streets-relief-vector"
@@ -20,8 +21,30 @@ require([
     var view = new MapView({
         container: "mapView",
         map: map,
-        center: [-87.6298, 41.8781],
+        center: [-87.6298, 41.8781], // Chicago
         zoom: 9
+    });
+
+    // ------------- Locator task ---------------
+    var locator = new Locator({
+        url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+    });
+    view.on("click", function(event){
+        view.popup.clear();
+
+        var lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
+        var lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
+        view.popup.open({
+            // Set the popup's title to the coordinates of the clicked location
+            title: "Reverse geocode: [" + lon + ", " + lat + "]",
+            location: event.mapPoint // Set the location of the popup to the clicked location
+        });
+
+        locator.locationToAddress(event.mapPoint).then(function(response){
+            view.popup.content = response.address.Match_addr;
+        }, function(error){
+            console.log(error);
+        });
     });
 
     // ------------- Search widget ---------------
