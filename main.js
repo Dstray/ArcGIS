@@ -7,10 +7,11 @@
 require([
         "esri/Map",
         "esri/views/MapView",
+        "esri/widgets/BasemapToggle",
         "esri/widgets/Locate",
         "esri/widgets/Search",
         "dojo/domReady!"
-    ], function(Map, MapView, Locate, Search) {
+    ], function(Map, MapView, BasemapToggle, Locate, Search) {
 
     var map = new Map({
         basemap: "streets-relief-vector"
@@ -23,14 +24,14 @@ require([
         zoom: 9
     });
 
-    // Search widget
+    // ------------- Search widget ---------------
     var search = new Search({
         view: view
     });
     //search.defaultSource.withinViewEnabled = true; // Limit search to visible map area only
     view.ui.add(search, "top-right"); // Add to the view
 
-    // Locate widget
+    // ------------- Locate widget ---------------
     var locate = new Locate({
         view: view
     });
@@ -44,4 +45,14 @@ require([
         });
     });
     view.ui.add(locate, "top-left");
+
+    // ------------- BasemapToggle widget ---------------
+    var basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybrid"
+    });
+    // Add widget to the bottom left corner of the view
+    view.ui.add(basemapToggle, {
+        position: "bottom-left"
+    });
 });
