@@ -1,19 +1,12 @@
 /*!
  * ArcGIS v0.1.0 (http://dstray.github.io/ArcGIS)
- * Copyright 2015- Dstray
+ * Copyright 2017- Dstray
  * Licensed under the MIT license
  */
 
-html, body, #map, .map.container {
+html, body, #mapView {
   padding: 0;
   margin: 0;
+  width: 100%;
   height: 100%;
-}
-#map, .map.container {
-  position: fixed;
-  width: 80%;
-}
-#dir {
-  float: right;
-  width: 20%;
 }
