@@ -17,10 +17,3 @@ html, body, #map, .map.container {
   float: right;
   width: 20%;
 }
-#legendDiv {
-  background-color: #fff;
-  position: absolute !important;
-  z-index: 99;
-  top: 10px;
-  right: 20px;
-}

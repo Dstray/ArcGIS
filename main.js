@@ -4,23 +4,24 @@
  * Licensed under the MIT license
  */
 
-var map;
 require([
-    "esri/map",
-    "esri/dijit/Directions",
+    "esri/Map",
+    //"esri/dijit/Directions",
+    "esri/views/MapView",
     /*API for layout*/
     //"dojo/parser",
     //"dijit/layout/BorderContainer", "dijit/layout/ContentPane",
     /*API for remote map*/
     //"esri/arcgis/utils",
     //"esri/dijit/Legend",
+    "esri/layers/FeatureLayer",
     "dojo/domReady!"
-    ], function(Map, Directions, parser) {
+    ], function(Map, MapView, FeatureLayer) {
     //parser.parse();
-    map = new Map("map", {
+    var map = new Map("map", {
         center: [-56.049, 38.485],
-        zoom: 3,
-        basemap: "streets"
+        zoom: 4,
+        basemap: "topo-vector"
     });/*
     arcgisUtils.createMap("1a40fa5cc1ab4569b79f45444d728067", "mapDiv").then(function (response) {
         map = response.map;
@@ -30,10 +31,19 @@ require([
             layerInfos:(arcgisUtils.getLegendLayers(response))
         }, "legendDiv");
         legend.startup();
-    });*/
+    });*//*
     var directions = new Directions({
         map: map,
         routeTaskUrl: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Route"
     }, "dir");
-    directions.startup();
+    directions.startup();*/
+    var featureLayer = new FeatureLayer({
+        url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer"
+    });
+
+    map.add(featureLayer);
+    var view = new MapView({
+        container: "map",
+        map: map
+    });
 });
