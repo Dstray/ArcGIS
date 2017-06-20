@@ -5,14 +5,31 @@
  */
 
 require([
+        "esri/Graphic",
         "esri/Map",
+        "esri/PopupTemplate",
+        "esri/geometry/Point",
         "esri/tasks/Locator",
+        "esri/symbols/PictureMarkerSymbol",
+        //"esri/symbols/SimpleMarkerSymbol",
         "esri/views/MapView",
         "esri/widgets/BasemapToggle",
         "esri/widgets/Locate",
         "esri/widgets/Search",
         "dojo/domReady!"
-    ], function(Map, Locator, MapView, BasemapToggle, Locate, Search) {
+    ], function(
+        Graphic,
+        Map, 
+        PopupTemplate,
+        Point,
+        Locator, 
+        PictureMarkerSymbol,
+        //SimpleMarkerSymbol,
+        MapView, 
+        BasemapToggle, 
+        Locate, 
+        Search
+    ){
 
     var map = new Map({
         basemap: "streets-relief-vector"
@@ -22,8 +39,40 @@ require([
         container: "mapView",
         map: map,
         center: [-87.6298, 41.8781], // Chicago
-        zoom: 9
+        zoom: 9,
+        popup: {
+            dockEnabled: true,
+            dockOptions: {
+                // Disables the dock button from the popup
+                buttonEnabled: false,
+                // Ignore the default sizes that trigger responsive docking
+                breakpoint: false
+            }
+        }
     });
+
+    // ------------- Point graphic ---------------
+    var pointGraphic = null;/*
+    var markerSymbol = new SimpleMarkerSymbol({
+        color: [226, 119, 40],
+        outline: {
+            color: [255, 255, 255],
+            width: 1
+        }
+    });*/
+    var markerSymbol = new PictureMarkerSymbol({
+        url: "./marker.png",
+        width: 32,
+        height: 32,
+        yoffset: 16
+    });
+
+    // ------------- Popup Templates ---------------
+    var locPopupTemp = {
+        title: "{Address}",
+        content: "<p><b>Address</b>: {Match_addr}</p>" + 
+            "<p><b>Coordinate</b>: [{Lon}, {Lat}]</p>"
+    };
 
     // ------------- Locator task ---------------
     var locator = new Locator({
@@ -32,16 +81,30 @@ require([
     view.on("click", function(event){
         view.popup.clear();
 
-        var lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
-        var lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
-        view.popup.open({
-            // Set the popup's title to the coordinates of the clicked location
-            title: "Reverse geocode: [" + lon + ", " + lat + "]",
-            location: event.mapPoint // Set the location of the popup to the clicked location
+        /*var lat = Math.round(event.mapPoint.latitude * 10000) / 10000;
+        var lon = Math.round(event.mapPoint.longitude * 10000) / 10000;*/
+
+        // point graphic
+        if (pointGraphic != null)
+            view.graphics.remove(pointGraphic);
+        pointGraphic = new Graphic({
+            geometry: event.mapPoint,
+            symbol: markerSymbol
         });
+        view.graphics.add(pointGraphic);
 
         locator.locationToAddress(event.mapPoint).then(function(response){
-            view.popup.content = response.address.Match_addr;
+            var lat = event.mapPoint.latitude;
+            var lon = event.mapPoint.longitude;
+            //console.log(response.address);
+            //pointGraphic.attributes = response.address;
+
+            view.popup.open({
+                title: response.address.Address,
+                content: "<p><b>Address</b>: " + response.address.Match_addr + "</p>" + 
+                    "<p><b>Coordinate</b>: [" + lon + ", " + lat + "]</p>",
+                location: event.mapPoint
+            });
         }, function(error){
             console.log(error);
         });
@@ -55,15 +118,16 @@ require([
     view.ui.add(search, "top-right"); // Add to the view
 
     // ------------- Locate widget ---------------
+    var curCoords = null;
     var locate = new Locate({
         view: view
     });
     locate.goToLocationEnabled = false;
     locate.on("locate", function(geoloc){
-        var coords = geoloc.position.coords
-        //console.log(coords);
+        curCoords = geoloc.position.coords
+        //console.log(curCoords);
         view.goTo({
-            center: [coords.longitude, coords.latitude],
+            center: [curCoords.longitude, curCoords.latitude],
             zoom: 16
         });
     });
