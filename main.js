@@ -14,8 +14,10 @@ require([
         //"esri/symbols/SimpleMarkerSymbol",
         "esri/views/MapView",
         "esri/widgets/BasemapToggle",
+        "esri/widgets/Expand",
         "esri/widgets/Locate",
         "esri/widgets/Search",
+        "dojo/dom",
         "dojo/domReady!"
     ], function(
         Graphic,
@@ -27,8 +29,10 @@ require([
         //SimpleMarkerSymbol,
         MapView, 
         BasemapToggle, 
+        Expand,
         Locate, 
-        Search
+        Search,
+        dom
     ){
 
     var map = new Map({
@@ -142,4 +146,12 @@ require([
     view.ui.add(basemapToggle, {
         position: "bottom-left"
     });
+
+    // ------------- Expand widget ---------------
+    var qExpand = new Expand({
+        view: view,
+        content: dom.byId("query"),
+        expandIconClass: "esri-icon-drag-horizontal"
+    });
+    view.ui.add(qExpand, "top-right");
 });

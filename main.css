@@ -10,3 +10,13 @@ html, body, #mapView {
   width: 100%;
   height: 100%;
 }
+
+.query-widget {
+  width: 400px;
+  /*pointer-events: auto;
+  position: relative;*/
+  z-index: 1;
+  background-color: #fff;
+  /*display: flex;
+  flex-flow: column nowrap;*/
+}
