@@ -10,9 +10,19 @@
   <body>
     <div id="mapView"></div>
     <div id="query" class="query-widget">
-      <div>query-widget</div>
-      <p>query-widget</p>
-      <div>query-widget</div>
+      <div class="search-container">
+        <div class="search-input-container">
+          <form class="search-form">
+            <input type="text" placeholder="Find address or place" class="search-input">
+          </form>
+        </div>
+        <div class="esri-widget-button" id="search">
+          <span class="esri-icon-search" aria-label="search icon"></span>
+        </div>
+        <div class="esri-widget-button" id="direction">
+          <span class="esri-icon-directions" aria-label="direction icon"></span>
+        </div>
+      </div>
     </div>
 
     <script src="https://js.arcgis.com/4.3/"></script>
