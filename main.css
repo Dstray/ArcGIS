@@ -49,3 +49,13 @@ html, body, #mapView {
   color: inherit;
   border: none;
 }
+
+.search-result-item {
+  width: 100%;
+  padding: 5px;
+}
+
+.search-result-item:hover {
+  border-width: 1px;
+  border-color: #000;
+}
